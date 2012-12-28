@@ -1,0 +1,64 @@
+<script>
+
+Array.max = function( array ){
+    return Math.max.apply( Math, array );
+};
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
+
+
+$(function() {
+});
+</script>
+<script src="/static/js/d3.v2.min.js" type="text/javascript"></script>
+<!-- <script src="http://d3js.org/d3.v2.js" type="text/javascript"></script> -->
+<div class="row-fluid">
+  <div class="span6 element">
+    <div class="bordered titlebar minheight200">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>Instance Usage</label>
+        </div>
+      </div>
+      <div class="remaining-height" id="instanceusage">
+      </div>
+    </div>
+  </div>
+  <div class="span6 element">
+    <div class="bordered">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>Logs</label>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <tr>
+        <td>Parameter changed</td>
+        </tr>
+        <tr>
+        <td>Executed</td>
+        </tr>
+        <tr>
+        <td>Logging test</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="span6 element">
+    <div class="bordered titlebar minheight200">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>Runs Per Day</label>
+        </div>
+      </div>
+      <div class="remaining-height" id="runsperday">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/static/js/status.js" type="text/javascript"></script>

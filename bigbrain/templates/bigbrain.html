@@ -1,0 +1,69 @@
+{% include begin.html %}
+
+{% include navbar.html %}
+{% if nav == 'home' %}
+<div class="container">
+  <div class="hero-unit" style="vertical-align: middle; display:block;margin-top:100px">
+    <h1> Welcome to BigBrain</h1>
+  </div>
+  <div class="row-fluid">
+    <div class="span6 element">
+      <div class="bordered">
+        <div class="navbar section">
+          <div class="navbar-inner top">
+            <label>BigBrain News</label>
+          </div>
+        </div>
+        <table class="table table-striped no-lower-margin limit-height-400">
+          <tr><td>BigBrain undergoes a huge redesign</td></tr>
+          <tr><td>Presentation at Society for Neuroscience 2012</td></tr>
+          <tr><td>BigBrain Alpha</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="span3 element">
+      <div class="bordered">
+        <div class="navbar section">
+          <div class="navbar-inner top">
+            <label>Social</label>
+          </div>
+        </div>
+        <div class="limit-height-400">
+        <table class="table table-striped no-lower-margin limit-height-400">
+          <tr><td>User 'Tyler' has shared a new experiment with you</td></tr>
+          <tr><td>New user 'Tim' added to group 'Beta Testers'</td></tr>
+        </table>
+        </div>
+      </div>
+    </div>
+    <div class="span3 element">
+      <div class="bordered">
+        <div class="navbar section">
+          <div class="navbar-inner top">
+            <label>Notifications</label>
+          </div>
+        </div>
+        <div class="limit-height-400">
+          <table class="table table-striped no-lower-margin limit-height-400">
+            <tr><td>Experiment <i>'Demo Experiment'</i> finished successfuly</td></tr>
+            <tr><td>Experiment <i>'Demo Experiment'</i> finished successfuly</td></tr>
+            <tr><td>Experiment <i>'Demo Experiment'</i> finished successfuly</td></tr>
+            <tr><td>Experiment <i>'Demo Experiment'</i> finished successfuly</td></tr>
+            <tr><td>Experiment <i>'Demo Experiment'</i> finished successfuly</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% elif nav == 'experiments' %}
+  {% include experiments.html %}
+{% elif nav == 'social' %}
+<div class="container">
+  <div class="hero-unit" style="vertical-align: middle; display:block;margin-top:100px">
+    <h1>Social elements coming soon!</h1>
+  </div>
+</div>
+{% end %}
+
+{% include end.html %}

@@ -1,0 +1,33 @@
+<script>
+$(function() {
+
+  var editarea = $('.edit-area');
+  
+  var total = editarea.parent().parent().height();
+  var newheight = total-editarea.parent().siblings('div').height();
+  editarea.css('height',newheight);
+  
+  bb.ajax_spinner = "#ajax-spinner";
+  
+  bb.Editor.Make(".edit-area","#edit-save");
+});
+</script>
+<div class="row-fluid">
+  <div class="span12">
+    <div class="navbar searchbar">
+      <div class="navbar-inner">
+        <form class="navbar-search pull-left">
+          <input type="text" class="search-query" placeholder="Find">
+        </form>
+        <div class="pull-right">
+          <a class="btn btn-small btn-info" type="button" id="edit-save">Save</a>
+        </div>
+        <div class="pull-right" id="ajax-spinner">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <textarea rows="3" class="span12 edit-area">{{code}}</textarea>
+</div>

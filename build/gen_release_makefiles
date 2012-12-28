@@ -1,0 +1,3 @@
+#!/bin/bash
+rm -rf CMakeCache.txt .project .settings .cproject
+cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ../src/

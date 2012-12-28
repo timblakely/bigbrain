@@ -1,0 +1,49 @@
+<div class="container">
+<p>
+</p>
+</div>
+{% set tab = functions['ActiveTab']() %}
+<div class="container">
+<ul class="nav nav-tabs">
+  <li{% if tab == 'all' %} class="active"{% end %}>
+  <a href="?type=all">All</a>
+  <li{% if tab == 'private' %} class="active"{% end %}>
+    <a href="?type=private">Private</a>
+  </li>
+  <li{% if tab == 'shared' %} class="active"{% end %}><a href="?type=shared">Shared</a></li>
+  <li{% if tab == 'group' %} class="active"{% end %}><a href="?type=group">Group</a></li>
+  <button class="btn btn-success pull-right" id="createnew">Create New Experiment</button>
+</ul>
+
+<div class="experiment-list">
+  <ul class="unstyled">
+  {% for a in functions['GetExpts']() %}
+  <div class="row-fluid">
+  <div class="span12">
+  <li class="well well-small"><a href="/experiments/view/?id={{ a['_id'] }}">{{ a['name'] }}</a>
+  {% if a['owner']==functions['get_current_user']() %}
+  <img class="owner" src="/static/img/owner.png">
+  {% end %}
+  </li>
+  </div>
+  </div>
+  {% end %}
+  </ul>
+</div>
+
+<div id="add-experiment-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="add-experiment-header" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="add-experiment-header">Create New Experiment</h3>
+  </div>
+  <div class="modal-body">
+    <label>Name:</label><input type="text" placeholder="Name" id="new-experiment-name">
+    <label>Description:</label><input type="text" placeholder="Description" id="new-experiment-description">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" id="save-new-experiment">Save</button>
+  </div>
+</div>
+
+<script src="/static/js/experiments.js" type="text/javascript"></script>

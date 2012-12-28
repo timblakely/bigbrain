@@ -1,0 +1,9 @@
+<ul class="breadcrumb">
+  <div class="container">
+    <li><a href="/experiments">Experiments</a> <span class="divider">/</span></li>
+    {% if exptname %}
+      <li><a href="/experiments/view/?{{idlink}}">{{exptname}}</a> <span class="divider">/</span></li>
+      <li><a href="/experiments/view/{{section}}?{{idlink}}">{{section}}</a> <span class="divider">/</span></li>
+    {% end %}
+  </div>
+</ul>

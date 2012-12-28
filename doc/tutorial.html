@@ -1,0 +1,320 @@
+<div class="row">
+ <div class="bigheader smaller nomargin-bottom">
+  <div class="container">
+   <h2 class="pull-left">Creating an Example Experiment in BigBrain</h2>
+  </div>
+ </div>
+</div>
+<div class="container toppad">
+ <div class="row">
+  <div id="contents">
+   <ul class="span3 nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="268">
+    <li class="active">
+     <a href="#gettingaround">Getting Around in BigBrain</a>
+    </li>
+    <li>
+     <a href="#creating">Creating an Experiment</a>
+    </li>
+    <li>
+     <a href="#launching">Compiling and Launching</a>
+    </li>
+    <li>
+     <a href="#inspecting">Exploring and Inspecting Instances</a>
+    </li>
+   </ul>
+  </div>
+  <div class="span9 pull-right tutorial">
+   <H2 id="gettingaround">Getting Around in BigBrain</H2>
+   <h4>Defining The Problem</h4>
+   <p>The human brain is a very highly connected network of neural cells. One of the more recent questions that has been brought up in the broader field of neuroscience is <i>"How tolerant are these networks to signal loss?"</i> While computational neuroscience may be able to answer these types of questions, the conventional simulation approach would be to set the parameters for the artificial network, run the simulation, interpret results and repeat. By leveraging BigBrain, we can set up an <i>experiment</i> that allows us to define the number an range of the parameters we would like to search ahead of time and running all the simulations at once in parallel.</p>
+   <p>To investigate this question, we will create an <b>experiment</b> that generates a simple network consisting of two layers of neurons. To simulate varying signal loss, we will create a <b>parameter</b> that defines the probability that a synapse will transmit information if a neuron fires an action potential. In addition, we will create a second dimenson to explore by creating a <b>parameter</b> that defines how connected the simulated network is.</p>
+   <div class="alert alert-info">
+    <b>Note:</b> This is a contrived example for the purposes of tutorial, but the goal is to show how one would design an experiment on BigBrain. 
+   </div> 
+   <h4>Logging In</h4>
+   <p>The first step in using BigBrain is to log in (after <a href="/setup/localhost#starting">starting</a> the server). Open up your web browser and navigate to <a href="http://localhost:12345">http://localhost:12345</a></p>
+   <div class="span9">
+    <img src="/static/img/tutorial/000_Url.jpg" class="img-rounded">
+   </div>
+   <p>and you should be greeted with the BigBrain login screen:</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/001_Login.jpg" class="img-rounded">
+   </div>
+   
+   <p>Enter the username and password you generated with the <code>adduser.py</code> script</p> and click <b>Sign In</b>. You'll now be in the landing page of BigBrain
+   <div class="span9">
+    <img src="/static/img/tutorial/002_Inside.jpg" class="img-rounded">
+   </div>
+   <div class="span9 alert alert-info">
+    <b>Note:</b> The content on the main page is currently static and will be dynamic in future version of BigBrain. 
+   </div>
+   <h4>The Interface</h4>
+   <p>Take note of the bar along the top of the page. This is the main navigation bar that will guide you to different areas of BigBrain.<p>
+   <div class="span9">
+    <img src="/static/img/tutorial/003_Navbar.jpg" class="img-rounded">
+   </div>
+   <p>Click on the <code>experiments</code> button in the navbar. It will bring you to a list of all known experiments that are available to you.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/004_ExperimentList.jpg" class="img-rounded">
+   </div> 
+   <p>Experiments that you have created are marked with the <code>Owner</code> marker in the upper right hand corner. Of course, if this is your first experiment that you have created with BigBrain these lists will be empty. You'll notice the tabs along the top of the list.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/005_AllPrivateShared.jpg" class="img-rounded">
+   </div>
+   <p><code>All</code> lists all experiments available to you, <code>Private</code> contains experiments you have created but not shared with anyone, <code>Shared</code> lists experiments that others have shared with you directly, and <code>Group</code> experiments have been shared with a large number of users, yourself included.</p>
+   <p>In addition, along the top you'll see a trail of where you're at, what experiment you're in, and what you're looking at, so you'll never get lost</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/006_Breadcrumb.jpg" class="img-rounded">
+   </div>
+   <H2 id="creating">Creating an Experiment</H2>
+   <h4>Create a New Experiment</h4>
+   <p>Click the green <code>Create New Experiment</code> button and you'll be presented with a dialog asking you to give your new experiment a name and description.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/007_CreateNew.jpg" class="img-rounded">
+   </div>
+   <p>Click the blue <code>Save</code> button and your new experiment will be listed under both the <code>All</code> tab and the <code>Private</code> tab in the experiments listing</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/008_ListedExperiment.jpg" class="img-rounded">
+   </div> 
+   <h4>Explore the Experiment in Detail</h4>
+   <p>Now that you've created your experiment clink on the link and you'll be taken to a detailed description of the experiment:</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/009_Status.jpg" class="img-rounded">
+   </div>
+   <div class="span9 alert alert-info">
+    <b>Note:</b> The content on the the <i>Status</i> page is currently static and will be dynamic in future version of BigBrain. 
+   </div>
+   <p>This is the Status page for your experiment. It is currently in development, but in future versions will list the history, activity, and logs of the current experiment. Other sections of the experiment can be found in the navbar to the left:</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/010_Panel.jpg" class="img-rounded">
+   </div>
+   <h4>Define a Network</h4>
+   <p>Now that we have created the experiment, we need to tell our simulator how we would like the simulated neural network arranged. We input such descriptions in the network editor. Click on the <code>Edit</code> link in the sidebar:
+   <div class="span9">
+    <img src="/static/img/tutorial/011_EditorBlank.jpg" class="img-rounded">
+   </div>
+   <p>Let's set up a network with two layers offset in space, one a 3D thick layer having 1311 neurons and the other a flat 2D layer having 311 neurons (more information on how to write network layouts can be found on the <a href="/api#networkdescription">API page for Network Description</a>)
+<pre class="limit-height200">name: "Basic Network"
+random_seed:1
+arrangement:{
+ type:ARR_TYPE_FLAT_RECTANGULAR
+ name:"Upper"
+ neuron:{
+  type:N_TYPE_PIAF
+  num_neurons:1311
+  name:"PIAF Neuron"
+  channel:{
+   type:CH_TYPE_IKNA
+   common_params:"
+    name:'IKNA'
+   "
+  }
+  channel:{
+   type:CH_TYPE_IKNA
+   params:"
+   "
+  }
+  channel:{
+   type:CH_TYPE_INAP
+  }
+  channel:{
+   type:CH_TYPE_IH
+  }  
+  connection:{
+   type:SYN_TYPE_AMPA
+   allow_self_connection:false
+   target:{
+    type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+    target_neuron_name:"PIAF Neuron"
+    params:"
+     height:2.75
+     width:2.5
+     amplitude:0.25
+    "
+   }
+   params:"
+     probability:1
+   "
+  }
+  connection:{
+   type:SYN_TYPE_AMPA
+   allow_self_connection:false
+   target:{
+    type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+    target_arrangement_name:"Lower"
+    params:"
+     height:45
+     width:40
+     depth:80
+     origin:{x:0 y:0 z:20}
+     use_origin:true
+     amplitude:0.03
+    "
+   }
+   params:"
+   "
+  }
+  common_params: "
+   color: {r:0.0 g:0.7 b:0.5 }
+  "
+ }
+ params:"
+  origin:{x:0 y:0 z:0}
+  dimensions:{width:40 height:20 depth:5}
+  distribution:DIST_RANDOM
+ "  
+}
+arrangement:{
+ type:ARR_TYPE_FLAT_RECTANGULAR
+ name:"Lower"
+ neuron:{
+  type:N_TYPE_PIAF
+  num_neurons:311
+  name:"PIAF Neuron2"
+  channel:{
+   type:CH_TYPE_IKNA
+   common_params:"
+    name:'IKNA'
+   "
+  }
+  channel:{
+   type:CH_TYPE_IKNA
+  }
+  channel:{
+   type:CH_TYPE_INAP
+  }
+  channel:{
+   type:CH_TYPE_IH
+  }  
+  common_params: "
+   color: {r:0.0 g:0.7 b:0.5 }
+  "
+ }
+ params:"
+  origin:{x:0 y:0 z:20}
+  dimensions:{width:45 height:20}
+  distribution:DIST_RANDOM
+ "  
+}</pre>
+   <div class="span9">
+    <img src="/static/img/tutorial/012_EditorFilled.jpg" class="img-rounded">
+   </div>
+   <p>Don't forget to click save before navigating away from the page. The keyboard shortcut <code>ctrl + s</code> works in the editor as well as a handy shortcut for saving.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/013_EditorSaved.jpg" class="img-rounded">
+   </div>
+   <h4>Creating a Parameter</h4>
+   <p>We have now established a core network that we want to simulate. However, its parameters are fixed and will only generate one network. In the experiment we described above, we want to vary two things: the connectivity of the network (how connected neurons are to their neighbors), and the probability information is transferred. We can explore both these dimensions by creating one parameter each and using it in the network description.</p>
+   <p>To add a new parameter, click on <code>Parameters</code> in the sidebar and click <code>Add Parameter</code></p>
+   <div class="span9">
+    <img src="/static/img/tutorial/014_AddParameter.jpg" class="img-rounded">
+   </div>
+   <p>Since we want a parameter to represent "connectivity", name the parameter <i>connectivity</i> and click the blue <code>Save</code> button to save the parameter</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/015_ConnectivityParameter.jpg" class="img-rounded">
+   </div>
+   <p>The experiment will now have a <i>connectivity</i> parameter that is filled in with the default type and values:</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/016_DefaultRange.jpg" class="img-rounded">
+   </div>
+   <p>In the network we have defined, "connectivity" means the probability of one neuron synapsing on its neighbor. To run the range from a sparsely- to highly-connected, change the range of <i>connectivity</i> to run from 0.05 to 0.35, in steps of 0.05: 
+   <div class="span9">
+    <img src="/static/img/tutorial/017_EditRange.jpg" class="img-rounded">
+   </div>
+   <p>Even though we now have defined a parameter named "connectivity", we still need to tell BigBrain where to use it in our network description. Go back to the Editor using the <code>Edit</code> link in the sidebar and find the <code>amplitude</code> parameter that was defined. This parameter affects the amplitude of the gaussian probability kernel that controls whether a neuron synapses on its neighbor.
+   <div class="span9">
+    <img src="/static/img/tutorial/018_ChangingAmplitude.jpg" class="img-rounded">
+   </div>
+   <p>To input the range of values the "connectivity" parameter has been defined over, delete the hardcoded value of 0.25 and change the <code>amplitude</code> value to <code>{_{ conenctivity }_}</code>:
+   <div class="span9">
+    <img src="/static/img/tutorial/019_ParameterizedConnectivity.jpg" class="img-rounded">
+   </div>
+   <div class="span9 alert">
+    All parameters in BigBrain are used by enclosing the parameter name in {_{ ... }_} 
+   </div>
+   <p>Since we want to also vary the probability of information transference, find the <code>probability</code> variable below it</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/020_ChangingProbability.jpg" class="img-rounded">
+   </div>
+   <p>and change the hardcoded value of 1 to <code>{_{ probability }_}</code>:
+   <div class="span9">
+    <img src="/static/img/tutorial/021_ParameterizedProbability.jpg" class="img-rounded">
+   </div>
+   <div class="span9 alert alert-success">
+    Don't forget to save! 
+   </div>
+   <p>You'll notice that we have used a parameter that we haven't actually defined yet: <code>probability</code>. That's okay, since the experiment hasn't actually been <a href="#launching">compiled</a> yet. But before we do, we need to define it. Go back to the <code>Parameters</code> section and add a second parameter named <code>probability</code>:
+   <div class="span9">
+    <img src="/static/img/tutorial/022_BothParameters.jpg" class="img-rounded">
+   </div>
+   <H2 id="launching">Compiling and Launching</H2>
+   <p>Now that we have all the pieces of the experiment in place, let's try to execute it. Click on <code>Execute</code> in the sidebar and you'll be presented with the following:</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/023_ExecuteNeedsCompilation.jpg" class="img-rounded">
+   </div>
+   <p>What this means is that the experiment has been changed sufficiently that it requires <b>compilation</b>. This is just a way of performing a simple sanity check over the network description and the parameters to make sure that everything will turn out smoothly when BigBrain tries to execute the experiment. For example, if there was a parameter used in the network description that was not defined in the parameter list, or a parameter was disabled and was used in the experiment, BigBrain would throw up a warning. However, for this tutorial when you click on <code>Compile</code> in the sidebar it should say that the experiment compiled successfully:
+   <div class="span9">
+    <img src="/static/img/tutorial/024_CompileSuccess.jpg" class="img-rounded">
+   </div>
+   <p>Now, going back to <code>Execute</code> should show a summary of what the experiment will do if it is started.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/025_ReadyToExecute.jpg" class="img-rounded">
+   </div>
+   <p>You'll notice that both parameters we have defined are listed there, along with the number of discrete values in the range we have defined. BigBrain performs all possible combinations of values, giving us a total of 42 networks that will be started.</p>
+   <div class="span8 alert alert-danger">
+    <b>Watch Out!</b> Because we are running locally, BigBrain will try to execute 42 different networks in parallel. This will use all available cores on your computer, and will likely <b>slow down your computer significantly</b>! Here's an example of CPU usage when the "start" button is clicked:
+    <img src="/static/img/tutorial/026_CPUUsage.jpg" class="img-rounded">
+   </div>
+   <p>When you are ready, click the green <code>start</code> button and the experiment will begin.</p>
+   <H2 id="inspecting">Exploring and Inspecting Instances</H2>
+   <h4>Finding the Right Instance</h4>
+   <p>Now that the experiment has started, there should be a number of instances of the network humming away in the background. Using BigBrain, you can interact with the networks, watch them simulate, and inspect their inner state. Let's try looking for one of the networks that was created that has a high connectivity and a high probability of transmission.</p>
+   <p>Click the <code>instances</code> link in the sidebar</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/027_InstanceList.jpg" class="img-rounded">
+   </div>
+   <p>Instead of presenting a list of all instances, BigBrain allows you to filter by the parameters you defined for your experiment. To select all the instances that have a high connectivity, click the <code>connectivity</code> parameter to expand its values and select 0.35.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/028_Connectivity35.jpg" class="img-rounded">
+   </div>
+   <p>After selecting it, BigBrain creates a filter that will only show networks that have their connectivity parameter set to 0.35. To remove this filter, click the <code>X</code> in the upper right of the filter bar.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/029_FilterInstances.jpg" class="img-rounded">
+   </div>
+   <p>Now select a second filter to choose the instances with probability of 1</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/030_SelectProbability.jpg" class="img-rounded">
+   </div>
+   <p>You should see one instance listed, named <i>localhost_[ProcessID]</i>. This is the network that is running that has the connectivity value of 0.35 and the probability value of 1.0.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/031_FilteredInstance.jpg" class="img-rounded">
+   </div>
+   <h4>Connecting and Viewing a Network</h4>
+   <p>When you click on an instance in the filtered list, BigBrain connects your browser to the instance and begins to stream data back to you</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/032_InstanceConnected.jpg" class="img-rounded">
+   </div>
+   <p>What you see is a real-time representation of the network's activity. Each dot is a neuron; its color representative of its membrane potential.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/033_GLView1.jpg" class="img-rounded">
+   </div>
+   <p>When a neuron fires its color changes to red and gradually fades back to a neutral gray. Cells that have been hyperpolarized (cannot fire an action potential for some time) are shaded blue. Because the network is rendered on the graphics card using WebGL, you can interact with the network. <code>Left click and drag</code> to rotate the view, showing how both layers of neurons we set up back in the network description.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/034_GLRotated.jpg" class="img-rounded">
+   </div>
+   <p><code>Left-clicking</code> on any neuron will select it, turning it green and displaying any synaptic connections it may have in green. In addition, BigBrain will query the network and ask for specific details of the cell's internal state.</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/035_SelectedNeuron.jpg" class="img-rounded">
+   </div> 
+   <p>States that are changing rapidly can be graphed by clicking the graph icon beside its value</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/036_GraphMembrane.jpg" class="img-rounded">
+   </div>
+   <p><code>Middle-click and drag</code> to zoom in and out</p>
+   <div class="span9">
+    <img src="/static/img/tutorial/037_ZoomOut.jpg" class="img-rounded">
+   </div>
+   <p>Congratulations! You have now created an experiment and interacted with one of the instances that was created by executing the experiment. Feel free to browse around and check out other instances, tweak the parameters, change the network description.</p> 
+  </div>
+ </div>
+</div>

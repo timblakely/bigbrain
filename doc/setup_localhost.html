@@ -1,0 +1,271 @@
+<div class="row">
+  <div class="bigheader smaller nomargin-bottom">
+    <div class="container">
+      <h2 class="pull-left">How to get up and running with BigBrain</h2>
+    </div>
+  </div>
+</div>
+<div class="container toppad tab-pane active fade in" id="localhost">
+  <div class="row">
+    <div class="span12 centered">
+      <h1>To run BigBrain locally on your desktop/laptop:</h1>
+    </div>
+  </div>
+  <hr class="soften">
+  <div class="row">
+    <div id="contents">
+      <ul class="span3 nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="268">
+        <li class="active">
+          <a href="#systemreqs">System Requirements</a>
+        </li>
+        <li>
+          <a href="#downloading">Downloading BigBrain</a>
+        </li>
+        <li>
+          <a href="#prereqs">Installing Required Libraries</a>
+        </li>
+        <li>
+          <a href="#compile">Compiling BigBrain</a>
+        </li>
+        <li>
+          <a href="#database">Setting Up Database</a>
+        </li>
+        <li>
+          <a href="#starting">Starting The Front-End</a>
+        </li>
+      </ul>
+    </div>
+    <div class="span9 pull-right">
+      <H2 id="systemreqs">System Requirements</H2>
+      <p>BigBrain runs on any linux system. It was developed and known to work on Ubuntu versions 10.04+. Other than that, you just need a web browser that is HTML5 compliant (i.e. <a href="http://chrome.google.com">Chrome</a>, <a href="http://www.mozilla.org/en-US/firefox">Firefox</a>). It's that simple! To interact with instances, the web browser must be capable of rendering Javascript and WebGL.</p>
+      <div class="alert alert-info">
+        <b>Note:</b> The instructions on this page are geared toward Debian (Ubuntu) users. For information on how to install packages on other platforms, please see your distribution's documentation.  At the time of this writing, all packages listed here are provided by the Precise 12.04 repository and provide the minimum or required version of each respective library.
+      </div>
+      <H2 id="downloading">Download BigBrain</H2>
+      <p>You have two options for downloading BigBrain:</p>
+      <h4>Tarball</h4>
+      <p>Over on the <a href="/download">download</a> page, you can get a packaged tarball of all the files you need to run the latest version of BigBrain. To download and extract it to your home directory:</p>
+<pre>
+cd ~/
+mkdir bigbrain
+cd bigbrain
+wget [[fileurl]]
+tar -xzf [[filename]]</pre>
+      <p>If you would like, you can delete the downloaded tarball by <code>rm [[filename]]</code>
+      <h4>Google Code Repository</h4>
+      <p>You can download the latest code at the BigBrain code repository, located at <a href="[[repourl]]">[[repourl]]</a>.  Note: you do not need to download the code from the repository if you have downloaded the file above.</p>
+<pre>
+sudo apt-get install git
+cd ~/
+git clone [[repourl]]
+cd bigbrain</pre>
+      <H2 id="prereqs">Install Required Libraries</H2>
+      <p>BigBrain is built on a number of freely available software libraries.  Many of them are open-source:</p>
+      <div class="row-fluid centered">
+        <div class="span4">
+          <a href="http://www.python.org">Python</a>
+        </div>
+        <div class="span4">
+          <a href="http://github.com/mrdoob/three.js/">THREE.js</a>&nbsp<i class="icon-ok"></i>
+        </div>
+        <div class="span4">
+          <a href="http://www.d3js.org">d3.js</a>&nbsp<i class="icon-ok"></i>
+        </div>
+      </div>
+      <div class="row-fluid centered">
+        <div class="span4">
+          <a href="http://mustache.github.com">mustache.js</a>&nbsp<i class="icon-ok"></i>
+        </div>
+        <div class="span4">
+          <a href="http://twitter.github.com/bootstrap/">bootstrap.js</a>&nbsp<i class="icon-ok"></i>
+        </div>
+        <div class="span4">
+          <a href="http://exacttarget.github.com/fuelux/">FuelUX</a>&nbsp<i class="icon-ok"></i>
+        </div>
+      </div>
+      <div class="row-fluid centered">
+        <div class="span4">
+          <a href="http://www.tornadoweb.org/">Tornado</a>
+        </div>
+        <div class="span4">
+          <a href="http://code.google.com/p/protobuf/">Protocol Buffers</a>
+        </div>
+        <div class="span4">
+          <a href="http://www.cmake.org/">CMake</a>
+        </div>
+      </div>
+      <div class="row-fluid centered">
+        <div class="span4">
+          <a href="http://www.mongodb.org/">MongoDB</a>
+        </div>
+        <div class="span4">
+          <a href="http://www.cython.org/">Cython</a>
+        </div>
+        <div class="span4">
+          <a href="http://www.msgpack.org/">Msgpack</a>
+        </div>
+      </div>
+      <div class="row-fluid centered">
+        <div class="span4">
+          <a href="http://www.bsonspec.org/">BSON</a>
+        </div>
+        <div class="span4">
+          <a href="http://www.json.org">JSON</a>&nbsp<i class="icon-ok"></i>
+        </div>
+        <div class="span4">
+          <a href="http://www.boost.org">Boost</a>
+        </div>
+      </div>
+      <div class="row-fluid centered">
+        <div class="span4">
+          <a href="http://curl.haxx.se/">CURL</a>
+        </div>
+        <div class="span4">
+          <a href="http://api.mongodb.org/python/current/">PyMongo</a>
+        </div>
+        <div class="span4">
+          <a href="https://www.dlitz.net/software/pycrypto/">PyCrypto</a>
+        </div>
+      </div>
+      <div class="alert alert-success">
+        Packages listed with the <i class="icon-ok"></i> icon indicate they come with the BigBrain distribution and/or do not require a separate download.
+      </div>
+      <p>For a cheat-sheet command that installs all the required packages, see <a href="#cheatsheet">the end</a> of this section.</p>
+      <h4>Basics</h4>
+      <p>Many packages - BigBrain included - require compilation. The suggested way of doing so is to install the GNU gcc/g++ compilers. Because BigBrain takes advantage of some c++0x standards, it requires the g++ compiler version 4.6+.</p>
+      <p>To install a common toolchain</p>
+<pre>sudo apt-get install build-essential
+sudo apt-get install gcc
+sudo apt-get install g++</pre>
+      <h4>Python</h4>
+      <p><i>Required version: 2.7.3</i></p>
+      <p>Both the front-end and the thin client are coded in Python. BigBrain has been successfully tested on version 2.7, but has not been tested (and likely will not work out of the box) with Python versions 3.0+</p>
+      <p>To install:</p>
+<pre>sudo apt-get install python2.7
+sudo apt-get install python-dev</pre>
+      <p>Another useful tool for python is pip, or Package Index for Python. It allows easy installation of additional Python modules, and is used below</p>
+<pre>sudo apt-get install python-pip</pre>
+      <h4>Tornado</h4>
+      <p><i>Required version: 2.4.1+</i></p>
+      <p>Tornado provides the underlying HTTP functionality of BigBrain. It handles the REST API, websockets, database communication and cloud communication.</p>
+      <p>To install:</p>
+<pre>cd ~
+mkdir tornado
+cd tornado
+wget https://github.com/downloads/facebook/tornado/tornado-2.4.1.tar.gz
+tar -zxf tornado-2.4.1.tar.gz
+cd tornado-2.4.1
+sudo python setup.py install
+</pre>
+      <div class="alert alert-danger">
+        <b>Important:</b> Tornado requires a small patch to play nicely with binary HTTP requests. This patch can be applied by running <code>python patch_tornado.py</code> within the bigbrain/build directory. This step is critical for BigBrain to function correctly!
+<pre>cd !/bigbrain/build
+sudo python patch_tornado.py</pre>
+      </div>
+      <h4>Protocol Buffers</h4>
+      <p><i>Required version: 2.5.0+</i></p>
+      <p>BigBrain's simulator uses protocol buffers to store and serialize the state of cells, channels and synapses.  It provides a compact representation of the cell's internal state, and provides a reflection API. By allowing the simulator to treat all types of cells, channels and synapses the same, all of the cell logic and modeling can be specific to each type of neural unit.</p>
+      <p>To install:</p>
+<pre>sudo apt-get install libprotobuf-dev
+sudo apt-get install protobuf-c-compiler
+sudo apt-get install protobuf-compiler</pre>
+      <h4>CMake</h4>
+      <p><i>Required version: 2.8.4+</i></p>
+      <p>CMake is the package management and compilation suite that generates the Makefiles required to build the simulator portion of BigBrain. CMake can generate cross-platform build environments, meaning that BigBrain may be expandable to additional platforms in future version.</p>
+      <p>To install:</p>
+<pre>sudo apt-get install cmake</pre>
+      <h4>MongoDB</h4>
+      <p><i>Required version: 2.0.4+</i></p>
+      <p>The back-end database for BigBrain is MongoDB.  It is not compiled into BigBrain nor distributed with it, so it must be installed separately.</p>
+<p>To install:</p>
+<pre>sudo apt-get install mongodb</pre>
+      <h4>BSON</h4>
+      <p>BSON is necessary to manipulate MongoDB IDs.</p>
+      <p>To install:</p>
+<pre>sudo pip install bson</pre>
+      <h4>MsgPack</h4>
+      <p>While the Javascript implementation of MsgPack is provided by BigBrain, it is necessary to install the msgpack-python module</p>
+      <p>To install:</p>
+<pre>sudo pip install msgpack-python</pre>
+      <h4>Cython</h4>
+      <p><i>Required version: 0.17.2+</i></p>
+      <p>Because the simulator is coded in C++ and the thin BigBrain client is coded in Python, there needs to be a translation layer between C++ and Python. Cython provides automatic Python-C code generation, requiring just a few lines of code to integrate the two.</p>
+<p>To install:</p>
+<pre>
+cd ~
+mkdir cyinstall
+cd cyinstall
+wget http://www.cython.org/release/Cython-0.17.2.tar.gz
+tar -zxf Cython-0.17.2.tar.gz
+cd Cython-0.17.2
+sudo python setup.py install
+</pre>
+      <h4>Boost</h4>
+      <p><i>Required version: 1.48+</i></p>
+      <p>Boost provides many convienent C++ tools used by the simulator portion of BigBrain. While Boost mainly consists of header files, BigBrain also requires some of pre-compiled Boost libraries (specifically iostreams and program-options).</p>
+      <p>To install:</p>
+<pre>sudo apt-get install libboost1.48-all-dev</pre>
+      <h4>CURL</h4>
+      <p>BigBrain's modules communicate via a REST API, and leverage the CURL library to facilitate HTTP request calls.</p>
+      <p>To install:</p>
+<pre>sudo apt-get install libcurl4-openssl-dev</pre>
+      <h4>PyMongo</h4>
+      <p>An additional python module needed is needed to get Python to talk to MongoDB</p>
+      <p>To install:</p>
+<pre>sudo pip install pymongo</pre>
+      <h4>PyMongo</h4>
+      <p>A number of BigBrain's security and authentication protocols are taken care of by the PyCrypto Python module.</p>
+      <p>To install:</p>
+<pre>sudo pip install pycrypto</pre>
+      <h4 id="cheatsheet">All-in-one script</h4>
+      <p>This is simply a concatenated script to install all prerequirements for BigBrain:</p>
+<pre>
+sudo apt-get update
+sudo apt-get install -q -y build-essential
+sudo apt-get install -q -y gcc g++
+sudo apt-get install -q -y mongodb
+sudo apt-get install -q -y git python2.7 python-dev python-pip libprotobuf-dev protobuf-c-compiler protobuf-compiler cmake libboost1.48-all-dev libcurl4-openssl-dev
+sudo pip install bson pymongo msgpack-python pycrypto
+cd ~
+mkdir tornado
+cd tornado
+wget https://github.com/downloads/facebook/tornado/tornado-2.4.1.tar.gz
+tar -zxf tornado-2.4.1.tar.gz
+cd tornado-2.4.1
+sudo python setup.py install
+cd ~
+mkdir cyinstall
+cd cyinstall
+wget http://www.cython.org/release/Cython-0.17.2.tar.gz
+tar -zxf Cython-0.17.2.tar.gz
+cd Cython-0.17.2
+sudo python setup.py install
+cd ~/
+git clone [[repourl]]
+</pre>
+      <h2 id="compile">Compile Bigbrain</h2>
+      <p>The BigBrain framework is broken up into three main parts: the front-end, the thin client, and the simulator. The front-end and thin client are written in Python, and the simulator is coded in C++. The simulator needs to be compiled, so to do this we use the <code>g++</code> and <code>cython</code> rules generated by cmake:
+<pre>cd ~/bigbrain/build
+./gen_release_makefiles
+make</pre>
+      <p>And you're done!</p>
+      <h2 id="database">Start-up Database</h2>
+      <p>BigBrain keeps track of users, resources and experiments in a MongoDB database. Before BigBrain can operare, the database needs to be started.</p>
+<pre>cd ~/bigbrain/
+mkdir db
+sudo killall mongod # (in case it's running already)
+nohup mongod --dbpath ~/bigbrain/db &</pre>
+      <p>By prepending the command with <code>nohup</code> and adding the <code>&</code> at the end, it ensures that even if the terminal window is closed and/or any ssh sessions are cut, the database will continue to run.</p>
+      <p>Now that the database is running, we need to add our first user.  We do that by using the <code>adduser.py</code> script in the build directory.
+<pre>cd ~
+cd bigbrain/build
+python adduser.py</pre>
+      <h2 id="starting">Start Front-End</h2>
+      <p>All that's left to do is start up the front-end so you can access BigBrain</p>
+<pre>cd ~
+cd bigbrain/bigbrain
+python bigbrain.py -c Localhost</pre>
+      <p>You'll notice that we've used the <code>-c Localhost</code> flag here.  This simply means that we want BigBrain to use the <a href="/api#clustermanager_lcm">LocalhostClusterManager</a> to start up and bring down "instances".  Since we're running locally, that simply means that when BigBrain is asked to start an "instance", it simply spawns a new simulator process instead of talking to the cloud. Even still, BigBrain ensures that the simulator executes in the exact same way as it would in the cloud. For more information, check out the <a href="/api#clustermanager">ClusterManager</a> section.</p>
+    </div>
+  </div>
+</div>

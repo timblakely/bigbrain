@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="hero-unit" style="vertical-align: middle; display:block;margin-top:100px">
+<div class="container">
+<h1> Welcome to BigBrain</h1>
+<p>Please log in to access BigBrain</p>
+<div class="pull-right">
+  <form class="form-horizontal" action="/login?next={{next}}" method="post">
+    <label class="control-label" for="inputUsername">Username</label>
+    <div class="controls">
+      <input type="text" name="username" id="inpuUsername" placeholder="Username">
+    </div>
+    <label class="control-label" for="inputPassword">Password</label>
+    <div class="controls">
+      <input type="password" name="password" id="inputPassword" placeholder="Password">
+    </div>
+    <div class="controls">
+      <label class="checkbox">
+        <input type="checkbox"> Remember me
+      </label>
+      <button type="submit" class="btn">Sign in</button>
+    </div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>

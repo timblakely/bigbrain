@@ -1,0 +1,64 @@
+{% if success==True %}
+{% set comp_class = 'success' %}
+{% set comp_message = 'Success' %}
+{% else %}
+{% set comp_class = 'failed' %}
+{% set comp_message = 'Compilation Failed' %}
+{% end %}
+
+<div class="row-fluid">
+  <div class="span12 element">
+    <div class="bordered">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>Results</label>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span4 offset4 compiled {{comp_class}}">
+          {{comp_message}}
+        </div>
+        <div class="span6 element">
+          <div class="compiler bordered">
+            <div class="complabel warnings">Warnings: 
+              {% if warnings %} 
+                {{ len(warnings) }} 
+              {% else %} 
+                None 
+              {% end %}
+            </div>
+            {% for w in warnings %}
+            <div class="row-fluid">
+              <div class="span12 element">
+                <div class="bordered">
+                  {% raw w %}
+                </div>
+              </div>
+            </div>
+            {% end %}
+          </div>
+        </div>
+        <div class="span6 element">
+          <div class="compiler bordered">
+            <div class="complabel errors">Errors: 
+              {% if errors %} 
+                {{ len(errors) }} 
+              {% else %} 
+                None 
+              {% end %}
+            </div>
+            {% for e in errors %}
+            <div class="row-fluid">
+              <div class="span12 element">
+                <div class="bordered">
+                  {% raw e %}
+                </div>
+              </div>
+            </div>
+            {% end %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

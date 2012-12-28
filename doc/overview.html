@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="bigheader smaller">
+    <div class="container">
+      <h2 class="pull-left">What is BigBrain?</h2>
+    </div>
+  </div>
+</div>
+<div class="container toppad">
+  <div class="row">
+    <div id="contents">
+      <ul class="span3 nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+        <li class="active">
+          <a href="#overview">Overview</a>
+        </li>
+        <li>
+          <a href="#cloud" >The Google Cloud</a>
+        </li>
+        <li>
+          <a href="#parameter">Parameter Exploration</a>
+        </li>
+        <li>
+          <a href="#experiments">Digital Experiments</a>
+        </li>
+      </ul>
+    </div>
+    <div class="span9 pull-right">
+      <H2 id="overview">Overview</H2>
+      <h4>What is BigBrain?</h4>
+      <p>BigBrain is a platform for performing computational neuroscience experiment.  A joint project between <a href="http://www.google.com">Google</a> and the <a href="http://www.alleninstitute.org">Allen Institute for Brain Science</a>, it was developed with three goals in mind:</p>
+      <ol>
+        <li><B>Interaction</B> - Inspect and visualize simulations in real-time</li>
+        <li><B>Expansion</B> - Create experiments to explore large parameter spaces</li>
+        <li><B>Collaboration</B> - Share results and experiments with colleagues</li>
+        <li><B>Reproducibility</B> - Precisely recreate recorded results</li>
+      </ol>
+      <P><img src="/static/img/concepts.jpg" class="img-rounded"></P>
+      <H2 id="cloud">The Google Cloud</H2>
+      <h4>Who needs a supercomputer anyway?</h4>
+      <p>One of the major issues the computational neuroscience community has dealt with is the lack of available computing power.  Historically, research groups have had a choice: invest in a supercomputer to simulate hundreds of thousands of neurons, or limit the size and scale of their simulation to fit within the computing resources available to them.</p>
+      <p>As it turns out, you can buy a desktop computer nowadays with tens of gigabytes of RAM, eliminating one of the main requirements for supercomputers. Not only that, but "the cloud" can provide tons of on-demand computers with specs matching or exceeding the most cutting-edge computers available on the market today, it is now possible to run certain classes of neural simulations on a single "fat" node.</p>
+      <h4>Bursting into the cloud</h4>
+      <p>By assuming that a large network of simulated neurons can fit within a single node, the problem of inter-node communication latency is eliminated and each simulation is entirely contained on one computer. This opens up an interesting area of exploration: parameter sweeps and sensitivity analysis. Starting up multiple simulations in parallel is as simple as asking the cloud for a fresh instances and executing your desired simulation.</p>
+      <h4>Google Compute Engine</h4>
+      <p>At Google I/O 2012, Google <a href="https://www.youtube.com/watch?v=0-sF5ZWB_FY">announced</a> a new infrastructure-as-a-service - or "cloud" - called the Google Compute Engine (GCE). GCE allows users to start up any number of virtual machines in the cloud. In short, it's an on-demand cluster.</p>
+      <h4>BigBrain runs in any cloud</h4>
+      <p>While BigBrain was designed at Google and can run on GCE, it is designed in such a way that allows it to run on any cluster or cloud platform of any size, from a cluster with a hundred thousand cores all the way down to your own desktop. Feel free to <a href="/download">download</a> it and explore how to use it.   
+      <H2 id="parameter">Parameter Exploration</H2>
+      <p>The protocol for conventional computational neuroscience is an iterative process:</p>
+      <ol>
+        <li>Set parameters for simulation</li>
+        <li>Run simulation for extended period</li>
+        <li>Analyse results and compare to literature</li>
+        <li>Go to step 1</li>
+      </ol>
+      <p>Now that simulations can be performed in parallel, that opens up a whole new protocol:</p>
+      <ul>
+        <li>Create all possible parameter sets ahead of time</li>
+        <li>Start up many simulations in the cloud in parallel</li>
+        <li>Save results of each simulation for analysis</li>
+      </ul>
+      <H2 id="experiments">Digital Experiments</H2>
+      <p>Many times, computational neuroscience experiments are conducted by iteration.  The hypothesis would that a certain set of parameters will produce the expected results, but that is almost universally not the case. Parameters need to be tweaked, changes made to the network, random seeds need to be modified, etc.</p>
+      <p>BigBrain introduces the concept of a digital experiment in terms of parallel exploration.  Instead of the hypothesis being based on a single set of parameters, the hypothesis becomes that one or more combinations of parameter ranges will produce the desired results. Changing the hypothesis in this manner allows BigBrain to simply define an experiment as a network description and a series of desired parameter ranges. Executing the experiment allows the user explores the entire space simultaneously.</p>      
+    </div>
+  </div>
+</div>
+<script>
+
+$('#contents').on('activate', function() {
+  console.log('boop');
+});
+</script>

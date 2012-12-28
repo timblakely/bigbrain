@@ -1,0 +1,147 @@
+<script>
+$(function() {
+   
+  $('#instances-help').popover({
+    delay: {show:250, hide:100},
+    trigger: 'manual',
+    title: 'Instance Count',
+    placement: 'top',
+    html: true,
+    content: 'Total: <span class="badge">24</span><br> \
+    Running: <span class="badge badge-success">12</span><br> \
+    Starting: <span class="badge badge-info">11</span><br> \
+    Failed: <span class="badge badge-important">1</span>'
+  });  
+  
+  $('#instances-help').hover(function() {
+    var mustache_template = 'Total: <span class="badge">{{!total}}</span><br> \
+    Running: <span class="badge badge-success">{{!running}}</span><br> \
+    Starting: <span class="badge badge-info">{{!starting}}</span><br> \
+    Failed: <span class="badge badge-important">{{!terminated}}</span>';
+    $.ajax({
+      url:  "/experiments/ajax/execute/quickstatus?{{idlink}}",
+      type: "POST",
+      data: "",
+      success: function(val) {
+        var instances = JSON.parse(val);
+        $('#instances-help').attr('data-content',Mustache.to_html(mustache_template,instances));
+        $('#instances-help').popover('show');
+      }
+    });
+  },function() {
+    $('#instances-help').popover('hide');
+  });
+  
+  $('#stop-experiment').click(function(e) {
+    if($(this).hasClass('disabled')) {
+      return;
+    }
+    $('#confirm-stop').modal();
+  });
+  
+  $('#final-stop-experiment').click(function(e) {
+    $('#confirm-stop').modal('toggle');
+    $.ajax({
+      url:  "/experiments/ajax/execute/stop?{{idlink}}",
+      type: "POST",
+      data: "",
+      success: function(val) {
+        $('#stop-experiment').addClass('disabled');
+        $('#start-experiment').removeClass('disabled');
+      }
+    });
+  });
+  
+  $('#start-experiment').click(function(e) {
+    if($(this).hasClass('disabled')) {
+      return;
+    }
+    $.ajax({
+      url:  "/experiments/ajax/execute/execute?{{idlink}}",
+      type: "POST",
+      data: "",
+      success: function(val) {
+        $('#start-experiment').addClass('disabled');
+        $('#stop-experiment').removeClass('disabled');
+      }
+    });
+  });
+});
+</script>
+
+{% if not compiled %}
+<div class="row-fluid">
+  <div class="span12 element">
+    <div class="bordered">
+      <h4>Experiment has not been compiled.  Please <a href="compile?{{idlink}}">compile</a> the experiment before executing.</h4>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="row-fluid">
+  <div class="span9 element">
+    <div class="bordered">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>Resources</label>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Dimension</th><th>Values</th>              
+            </tr>
+          </thead>
+          {% set total_instances = 1 %}
+          {% for d in dimensions %}
+            <tr><td><i>{{ d[0] }}</i></td><td>{{ d[1] }}</td></tr>
+            {% set total_instances = total_instances * d[1] %}
+          {% end %}
+          <tr><td><b>Total:</b></b></td><td>{{ total_instances }}</td></tr>
+        </table>
+      </div>
+    </div>
+  </div> 
+  <div class="span3 element pull-right">
+    <div class="bordered darken labeled visible-overflow">
+      <div class="elabel">
+        Status:
+        {% if running %}
+          Running
+        {% else %}
+          Ready
+        {% end %}
+      </div>
+      <i>Instances:</i><i class="icon-question-sign pull-right" id="instances-help"></i>
+      <div class="progress">
+        {% if counts['total'] == 0 %}
+          <div class="bar bar-danger" style="width: 100%;"></div>
+        {% else %}
+          <div class="bar bar-success" style="width: {{counts['running']/counts['total']*100}}%;"></div>
+          <div class="bar" style="width: {{counts['starting']/counts['total']*100}}%;"></div>
+          <div class="bar bar-danger" style="width: {{counts['terminated']/counts['total']*100}}%;"></div>
+        {% end %}
+      </div>
+    </div>
+  </div>    
+</div>
+<div class="row-fluid">
+  <div class="span12 element left-space">
+    <button class="btn btn-success {% if running %} disabled{% end %}" id="start-experiment">Start</button>
+    <button class="btn btn-danger {% if not running %} disabled{% end %}" id="stop-experiment">Stop</button>
+  </div>
+</div>
+{% end %}
+
+<div id="confirm-stop" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirm-stop-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="confirm-stop-label">Confirm Stop?</h3>
+  </div>
+  <div class="modal-body">
+    <p>This will end your experiment, stop <b>all</b> data collection and tear down <b>all</b> instances.  Continue?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-danger" id="final-stop-experiment">Stop Experiment</button>
+  </div>
+</div>

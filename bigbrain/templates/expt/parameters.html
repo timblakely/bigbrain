@@ -1,0 +1,36 @@
+<script>
+</script>
+
+<div class="row-fluid">
+  <div class="span3">
+    <div class="row-fluid">
+      <div class="span12 element">
+        <button class="btn btn-mini fullwidth" id="add-parameter">Add Parameter</button>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <ul class="nav nav-list bordered" id="param-list">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="span9" id="param-details">
+  </div>
+</div>
+
+<div id="add-parameter-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="add-parameter-header" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="add-parameter-header">New Parameter</h3>
+  </div>
+  <div class="modal-body">
+    <label>Name:</label><input type="text" placeholder="Name" id="new-param-name">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" id="save-new-parameter">Save</button>
+  </div>
+</div>
+
+<script src="/static/js/parameters.js" type="text/javascript"></script>

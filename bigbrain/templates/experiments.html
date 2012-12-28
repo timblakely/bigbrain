@@ -1,0 +1,6 @@
+{% include breadcrumb.html %}
+{% if action=='list' %}
+  {% include expt/list.html %}
+{% else %}
+  {% include expt/view.html %}
+{% end %}

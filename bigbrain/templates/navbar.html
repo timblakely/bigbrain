@@ -1,0 +1,17 @@
+<div class="navbar navbar-static-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="/">BigBrain</a>
+      <ul class="nav">
+        <li{% if nav == 'home' %} class="active" {% end %}><a href="/">Home</a></li>
+        <li{% if nav == 'experiments' %} class="active" {% end %}><a href="/experiments/">Experiments</a></li>
+        <li{% if nav == 'social' %} class="active" {% end %}><a href="/social/">Social</a></li>
+      </ul>
+      <div class="authbox pull-right">
+      <img class="avatar" src="/static/img/avatar.gif">
+      <a href="#" class="muted">{{functions['get_current_user']()}}</a>
+      <a href="/logout" class="muted">(logout)</a>
+      </div>
+    </div>
+  </div>
+</div>

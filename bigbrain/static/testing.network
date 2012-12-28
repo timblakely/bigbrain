@@ -1,0 +1,100 @@
+name: "Basic Network"
+random_seed:1
+arrangement:{
+  type:ARR_TYPE_FLAT_RECTANGULAR
+  name:"Upper"
+  neuron:{
+    type:N_TYPE_PIAF
+    num_neurons:1311
+    name:"PIAF Neuron"
+    channel:{
+      type:CH_TYPE_IKNA
+      common_params:"
+        name:'IKNA'
+      "
+    }
+    channel:{
+      type:CH_TYPE_IKNA
+    }
+    channel:{
+      type:CH_TYPE_INAP
+    }
+    channel:{
+      type:CH_TYPE_IH
+    }    
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:false
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_neuron_name:"PIAF Neuron"
+        params:"
+          height:2.75
+          width:2.5
+          amplitude:0.1
+        "
+      }
+      params:"
+      "
+    }
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:false
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_arrangement_name:"Lower"
+        params:"
+          height:45
+          width:40
+          depth:80
+          origin:{x:0 y:0 z:20}
+          use_origin:true
+          amplitude:0.03
+        "
+      }
+      params:"
+      "
+    }
+    common_params: "
+      color: {r:0.0 g:0.7 b:0.5 }
+    "
+  }
+  params:"
+    origin:{x:0 y:0 z:0}
+    dimensions:{width:45 height:20 depth:5}
+    distribution:DIST_RANDOM
+  "    
+}
+arrangement:{
+  type:ARR_TYPE_FLAT_RECTANGULAR
+  name:"Lower"
+  neuron:{
+    type:N_TYPE_PIAF
+    num_neurons:311
+    name:"PIAF Neuron2"
+    channel:{
+      type:CH_TYPE_IKNA
+      common_params:"
+        name:'IKNA'
+      "
+    }
+    channel:{
+      type:CH_TYPE_IKNA
+    }
+    channel:{
+      type:CH_TYPE_INAP
+    }
+    channel:{
+      type:CH_TYPE_IH
+    }    
+    common_params: "
+      color: {r:0.0 g:0.7 b:0.5 }
+    "
+  }
+  params:"
+    origin:{x:0 y:0 z:20}
+    dimensions:{width:45 height:20}
+    distribution:DIST_RANDOM
+  "    
+}
+

@@ -1,0 +1,47 @@
+name: "Basic Network"
+random_seed:1
+arrangement:{
+  type:ARR_TYPE_FLAT_RECTANGULAR
+  name:"First Layer"
+  neuron:{
+    type:N_TYPE_PIAF
+    num_neurons:40
+    name:"PIAF Neuron"
+    channel:{
+      type:CH_TYPE_IKNA
+      common_params:"
+        name:'IKNA'
+      "
+    }
+    channel:{
+      type:CH_TYPE_INAP
+    }
+    channel:{
+      type:CH_TYPE_IH
+    }    
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:false
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_neuron_name:"PIAF Neuron"
+        params:"
+          height:0.75
+          width:10
+        "
+      }
+      params:"
+      "
+    }
+    common_params: "
+      color: {r:0.0 g:0.7 b:0.5 }
+    "
+  }
+  params:"
+    origin:{x:0 y:0 z:0}
+    dimensions:{width:80 height:20}
+    distribution:DIST_UNIFORM
+    num_rows: 1
+    num_cols: 40
+  "    
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+rm -rf CMakeCache.txt .project .settings .cproject
+cmake -G"Eclipse CDT4 - Unix Makefiles" -DCMAKE_ECLIPSE_MAKE_ARGUMENTS=-j5 -DCMAKE_BUILD_TYPE=Debug ../src/

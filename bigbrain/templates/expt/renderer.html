@@ -1,0 +1,93 @@
+<script src="/static/js/viewstream.js" type="text/javascript"></script>
+<script src="/static/js/connect.js" type="text/javascript"></script>
+<script src="/static/js/render.js" type="text/javascript"></script>
+<script src="/static/js/msgpack.js" type="text/javascript"></script>
+<script src="/static/js/stats.js" type="text/javascript"></script>
+<script src="/static/js/three.mod.js" type="text/javascript"></script>
+<script src="/static/js/underscore-min.js" type="text/javascript"></script>
+<script src="/static/js/d3.v2.min.js" type="text/javascript"></script>
+<div class="glview fullcontentwrapper"></div>
+<script>
+  viewstream = new Viewstream("{{watch}}");       
+</script>
+<script type="x-shader/x-vertex" id="vertexshader">
+
+    uniform float size;
+    attribute float v;
+    attribute float state;
+
+    varying float voltage;
+    varying float s;
+
+    void main() {
+
+        voltage = v;
+        s = state;
+
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+        gl_PointSize = size * ( 300.0 / length( mvPosition.xyz ) );
+
+        gl_Position = projectionMatrix * mvPosition;
+
+    }
+
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader">
+
+    uniform vec3 color_a;
+    uniform vec3 color_b;
+    uniform vec3 color_c;
+    uniform vec3 color_d;
+    uniform vec4 membrane_limits;
+    uniform vec4 size;
+
+    varying float voltage;
+    varying float s;
+    
+    uniform sampler2D texture;
+
+    bool AboutEqual(float a, float b, float c) {
+        return (a < b + c) && (a > b - c);
+    } 
+
+    void main() {
+
+    vec3 color;
+    float range;
+    float percent;
+
+    if(AboutEqual(s,0.0,0.1)) {
+        if(voltage <= membrane_limits[0]) {
+            color = color_a;
+        }
+        else if (voltage <= membrane_limits[1]) {
+            range = membrane_limits[1] - membrane_limits[0];
+            percent = (voltage - membrane_limits[0]) / range;
+            color = color_b * percent + color_a * (1.0 - percent);
+        }
+        else if (voltage <= membrane_limits[2]) {
+            range = membrane_limits[2] - membrane_limits[1];
+            percent = (voltage - membrane_limits[1]) / range;
+            color = color_c * percent + color_b * (1.0 - percent);
+        }
+        else if (voltage <= 101.0) {
+            range = membrane_limits[3] - membrane_limits[2];
+            percent = (voltage - membrane_limits[2]) / range;
+            color = color_d * percent + color_c * (1.0 - percent);
+        }
+        else {
+            color = color_d;
+        }
+    }
+    else if (AboutEqual(s,1.0,0.1)) {
+        color = vec3(0.0,1.0,0.0);
+    }
+    else if (AboutEqual(s,2.0,0.1)) {
+        color = vec3(0.2,.5,1.0);
+    }
+    
+        gl_FragColor = vec4( color, 1.0 );
+        gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+        //gl_FragColor = vec4(1,0,0,1);
+    }
+</script>

@@ -1,0 +1,94 @@
+{% set page = 'status' %} 
+
+<script>
+var exp = bb.Experiment.Create("{{ functions['GetID']() }}");
+$(function() {
+var rightpanel = $('.panel');
+var leftpanel = rightpanel.siblings();
+if(rightpanel.height() < leftpanel.height()) { 
+  rightpanel.css('min-height',leftpanel.height()+'px');
+}
+else {
+  // Need +1 for border
+  leftpanel.css('min-height',rightpanel.height()+1+'px');
+}
+  
+});
+</script>
+<div class="container" id="content">
+  <div class="row">
+    <div class="span12">
+      <header>
+      <h2>{{ functions['GetExptName']() }}</h2>
+      </header>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span12" id="leftbar">
+      <div class="row-fluid">  
+        <div class="span2">
+          <ul class="nav nav-list">
+          <li class="nav-header">Experiment:</li>
+          <li{% if section=='status' %} class="active"{% end %}>
+          <a href="status?{{ idlink }}">
+            <i class="icon-list icon-white"></i>Status
+          </a></li>
+          <li{% if section=='edit' %} class="active"{% end %}>
+          <a href="edit?{{ idlink }}">
+            <i class="icon-edit icon-white"></i>Edit
+          </a></li>
+          <li{% if section=='parameters' %} class="active"{% end %}>
+          <a href="parameters?{{ idlink }}">
+            <i class="icon-map-marker icon-white"></i>Parameters
+          </a></li>
+          <li{% if section=='compile' %} class="active"{% end %}>
+          <a href="compile?{{ idlink }}">
+            <i class="icon-wrench icon-white"></i>Compile
+          </a></li>
+          <li{% if section=='execute' %} class="active"{% end %}>
+          <a href="execute?{{ idlink }}">
+            <i class="icon-play icon-white"></i>Execute
+          </a></li>
+          <li class="divider"></li>
+          <li class="nav-header">Inspect:</li>
+          <li{% if section=='instances' %} class="active"{% end %}>
+          <a href="instances?{{ idlink }}">
+            <i class="icon-th icon-white"></i>Instances
+          </a></li>
+          <li{% if section=='recordeddata' %} class="active"{% end %}>
+          <a href="recordeddata?{{ idlink }}">
+            <i class="icon-book icon-white"></i>Recorded Data
+          </a></li>
+          <li class="divider"></li>
+          <li class="nav-header">Collaboration:</li>
+          <li{% if section=='share' %} class="active"{% end %}>
+          <a href="share?{{ idlink }}">
+            <i class="icon-share icon-white"></i>Share
+          </a></li>
+          </ul>
+        </div>
+        <div class="span10 panel">
+        {% if section=='status' %}
+          {% include status.html %}
+        {% elif section=='edit' %}
+          {% include edit.html %}
+        {% elif section=='parameters' %}
+          {% include parameters.html %}
+        {% elif section=='compile' %}
+          {% include compile.html %}
+        {% elif section=='execute' %}
+          {% include execute.html %}
+        {% elif section=='instances' %}
+          {% include instances.html %}
+        {% elif section=='recordeddata' %}
+          {% include recordeddata.html %}
+        {% elif section=='share' %}
+          {% include share.html %}
+        {% else %}
+          404!
+        {% end %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+name: "Basic Network"
+random_seed:1
+arrangement:{
+  type:ARR_TYPE_FLAT_RECTANGULAR
+  name:"First Layer"
+  neuron:{
+    type:N_TYPE_PIAF
+    num_neurons:11
+    name:"PIAF Neuron"
+    channel:{
+      type:CH_TYPE_IKNA
+      common_params:"
+        name:'IKNA'
+      "
+    }
+    channel:{
+      type:CH_TYPE_IKNA
+    }
+    channel:{
+      type:CH_TYPE_INAP
+    }
+    channel:{
+      type:CH_TYPE_IH
+    }    
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:false
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_neuron_name:"PIAF Neuron"
+        params:"
+          height:0.75
+          width:2.5
+        "
+      }
+      params:"
+      "
+    }
+    common_params: "
+      color: {r:0.0 g:0.7 b:0.5 }
+    "
+  }
+  params:"
+    origin:{x:0 y:0 z:0}
+    dimensions:{width:5 height:20}
+    distribution:DIST_RANDOM
+  "    
+}
+arrangement:{
+  type:ARR_TYPE_FLAT_RECTANGULAR
+  name:"Second Layer"
+  neuron:{
+    type:N_TYPE_PIAF
+    num_neurons:5
+    name:"PIAF2"
+    channel:{
+      type:CH_TYPE_IKNA
+    }
+    channel:{
+      type:CH_TYPE_IKNA
+    }
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:true
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_arrangement_name:"Second Layer"
+        target_neuron_name:"PIAF Neuron"
+        params:"
+          height:0.75
+          width:2.5
+        "
+      }
+      params:"
+      "
+    }
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:true
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_arrangement_name:"Second Layer"
+        target_neuron_name:"WEIRD"
+        params:"
+          height:0.75
+          width:2.5
+        "
+      }
+      params:"
+      "
+    }
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:true
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_arrangement_name:"First Layer"
+        target_neuron_name:"PIAF Neuron"
+        params:"
+          height:0.75
+          width:2.5
+        "
+      }
+      params:"
+      "
+    }
+    common_params: "
+      color: {r:0.5 g:0.0 b:0.0 }
+    "
+  }
+  neuron:{
+    type:N_TYPE_PIAF
+    num_neurons:6
+    name:"WEIRD"
+    channel:{
+      type:CH_TYPE_IKNA
+    }
+    channel:{
+      type:CH_TYPE_IKNA
+    }
+    connection:{
+      type:SYN_TYPE_AMPA
+      allow_self_connection:true
+      target:{
+        type:TARGET_DIST_TYPE_GAUSSIAN_BOX
+        target_arrangement_name:"First Layer"
+        params:"
+          height:0.75
+          width:2.5
+        "
+      }
+      params:"
+      "
+    }
+    common_params: "
+      color: {r:0.5 g:0.0 b:0.5 }
+    "
+  }
+  params:"
+    origin:{x:0 y:0 z:0}
+    dimensions:{width:5 height:20}
+    distribution:DIST_RANDOM
+  "    
+}

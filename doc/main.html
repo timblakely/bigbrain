@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BigBrain - Documentation Home</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+<script src="/static/js/bootstrap.js"></script>
+<link href="/static/css/doc.css" rel="stylesheet">
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+<link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+</head>
+<body data-spy="scroll" data-target="#contents" data-offset="0">
+  <div class="navbar navbar-static-top navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="/">BigBrain</a>
+        <ul class="nav">
+          {% for p in paths %}
+            {% if p|length == 2 %}
+              <li{% if page == p.1 %} class="active"{% endif %}><a href="/{{p.1}}">{{p.0}}</a></li>
+            {% else %}
+              <li class="dropdown {% if page == p.1 %} active {% endif %}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  {{ p.0 }}
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  {% for v in p.2 %}
+                    <li><a href="/{{v.1}}">{{v.0}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% if page == 'home' %}
+    {% include 'home.html' %}
+  {% endif %}
+  {% if page == 'overview' %}
+    {% include 'overview.html' %}
+  {% endif %}
+  {% if page == 'setup' %}
+    {% if not downpath %} 
+      {% include 'setup_localhost.html' %}
+    {% endif %}
+    {% if downpath.0 == 'localhost' %} 
+      {% include 'setup_localhost.html' %}
+    {% endif %}
+    {% if downpath.0 == 'gce' %}
+      {% include 'setup_gce.html' %}
+    {% endif %}
+  {% endif %}
+  {% if page == 'tutorial' %}
+    {% include 'tutorial.html' %}
+  {% endif %}
+</body>
+</html>

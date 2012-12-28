@@ -1,0 +1,96 @@
+<script>
+$(function() {
+  var rightpanel = $('.panel');
+  var leftpanel = rightpanel.siblings();
+  rightpanel.find('.bordered').resize(function(e) {
+    console.log($(this).height());
+    if(rightpanel.height() < $(this).parent().height()) { 
+      rightpanel.css('height',$(this).height()+'px');
+      leftpanel.css('height',$(this).height()+'px');
+    }
+  });
+  
+});
+</script>
+{% if not running %}
+<div class="row-fluid">
+  <div class="span12 element">
+    <div class="bordered">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>Experiment not running</label>
+        </div>
+      </div>
+      <h4>Please <a href="execute?{{idlink}}">execute</a> the experiment to generate instances.</h4>
+    </div>
+  </div>
+</div>
+{% elif watch %}
+<div class="row-fluid">
+  <div class="span12 element">
+    <div class="bordered">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>{{watch}}</label>
+        </div>
+      </div>
+      {% include renderer.html %}
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="row-fluid">
+  <div class="span12 element">
+    <div class="bordered">
+      <div class="navbar section">
+        <div class="navbar-inner top">
+          <label>Instances</label>
+        </div>
+      </div>
+      <ul class="nav nav-tabs">
+        <li{%if not all%} class="active" {% end %}>
+          <a href="instances?{{idlink}}">By Parameter</a>
+        </li>
+        <li{%if all%} class="active" {% end %}>
+          <a href="instances?{{idlink}}&all=1">All</a></li>
+      </ul>
+      <div class="tabcontent element">
+        {% if filtpath %}
+        {% set totalfilter='' %}
+        <ul class="breadcrumb">
+          <a href="instances?{{idlink}}" class="close">x</a>
+          {% for f in filt %}
+            {% set totalfilter='%s,%s=%s' % (totalfilter, f[0],f[1]) %}
+            <li><a href="instances?{{idlink}}&filter={{totalfilter}}">{{f[0]}}({{f[1]}})</a> <span class="divider">/</span></li>
+          {% end %}
+        </ul>
+        {% end %}
+        {% if instances %}
+          <a href="instances?{{idlink}}&watch={{instances['name']}}">{{instances['name']}} - {{instances['status']}}</a>
+        {% else %}
+          {% if parameters %}
+            <div class="accordion" id="by-parameters">
+              {% for p in parameters %}
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#by-parameters" href="#collapse_{{p['name']}}">
+                    {{ p['name'] }}
+                  </a>
+                </div>
+                <div id="collapse_{{p['name']}}" class="accordion-body collapse">
+                  <div class="accordion-inner">
+                    {% for val in p['values'] %}
+                    <a href="instances?{{idlink}}&filter={% if filtpath %}{{filtpath}},{% end %}{{p['name']}}={{val}}">{{val}}</a><BR>
+                    {% end %}
+                  </div>
+                </div>
+              </div>
+              {% end %}
+            </div>
+          {% end %}
+        {% end %}
+      </div>
+    </div>
+  </div>
+</div>
+{% end %}
